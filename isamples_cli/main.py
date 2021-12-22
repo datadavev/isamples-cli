@@ -91,7 +91,7 @@ def main(ctx, loglevel):
 @click.pass_context
 def listServices(ctx):
     """
-    List the available services
+    List the available service endpoints
     """
     for svc in SERVICES:
         print(", ".join(svc.get("name", [])))
@@ -102,6 +102,9 @@ def listServices(ctx):
 @click.pass_context
 @click.argument("service")
 def listFields(ctx, service):
+    """
+    List fields of the Solr search index.
+    """
     svc = getServiceByName(service)
     if svc is None:
         L.error("Unknown service: '%s'", service)
@@ -122,7 +125,9 @@ def listFields(ctx, service):
     "-n", "--numrecs", help="Number of records to retrieve", default=10, type=int
 )
 def getIdentifiers(ctx, service, query, numrecs):
-    """ """
+    """
+    List identifiers
+    """
     svc = getServiceByName(service)
     if svc is None:
         L.error("Unknown service: '%s'", service)
@@ -194,6 +199,9 @@ def getRecords(ctx, service, query, numrecs, model, destfolder):
     "--xycount", help="Aggregate by longitude, latitude and return count", is_flag=True
 )
 def getStream(ctx, service, query, numrecs, fields, random_sel, xycount):
+    '''
+    Stream a potentially larger number of records
+    '''
     svc = getServiceByName(service)
     if svc is None:
         L.error("Unknown service: '%s'", service)
